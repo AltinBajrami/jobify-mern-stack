@@ -1,5 +1,5 @@
 import multer from 'multer';
-import DataParser from 'datauri/parser';
+import DataParser from 'datauri/parser.ts';
 import path from 'path';
 
 const storage = multer.memoryStorage();
