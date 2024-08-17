@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { Form, redirect, useLoaderData, useNavigation } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { FormRow, FormRowSelect, SubmitButton } from '../components';
-import { JOB_STATUS, JOB_TYPE } from '../../../server/utils/constants';
+import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
 
 export const loader = async ({ params }) => {
     try {
@@ -45,7 +45,7 @@ const EditJob = () => {
                         defaultValue={job.jobStatus} list={Object.values(JOB_STATUS)} />
                     <FormRowSelect name={'jobType'} labelText={'job type'}
                         defaultValue={job.jobType} list={Object.values(JOB_TYPE)} />
-                    <SubmitButton formBtn={true} />
+                    <SubmitButton formBtn />
                 </div>
             </Form>
         </Wrapper>

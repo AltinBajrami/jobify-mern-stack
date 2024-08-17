@@ -5,7 +5,7 @@ import { Form, Link, useSubmit } from 'react-router-dom';
 import FormRow from '../components/FormRow'
 import FormRowSelect from '../components/FormRowSelect'
 import SubmitButton from '../components/SubmitButton'
-import { JOB_SORT_BY, JOB_STATUS, JOB_TYPE } from '../../../server/utils/constants';
+import { JOB_SORT_BY, JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
 
 const SearchContainer = () => {
     const { searchValues } = useAllJobsContext();
