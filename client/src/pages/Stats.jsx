@@ -14,7 +14,6 @@ export const loader = async () => {
 
 const Stats = () => {
     const { defaultStats, monthlyApplications } = useLoaderData();
-    console.log("🚀 ~ Stats ~ defaultStats, monthlyApplications:", defaultStats, monthlyApplications)
 
     return (
         <>

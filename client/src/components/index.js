@@ -10,3 +10,4 @@ export { default as JobsContainer } from './JobsContainer';
 export { default as SubmitButton } from './SubmitButton';
 export { default as ChartsContainer } from './ChartsContainer';
 export { default as StatsContainer } from './StatsContainer';
+export { default as Loading } from './Loading';
