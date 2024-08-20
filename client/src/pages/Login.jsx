@@ -6,7 +6,7 @@ import { customFetch } from '../utils/customFetch'
 import { toast } from 'react-toastify'
 
 
-export const action = async ({ request }) => {
+export const action = (queryClient) => async ({ request }) => {
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
     const errors = { msg: '' };
@@ -16,6 +16,7 @@ export const action = async ({ request }) => {
     }
     try {
         await customFetch.post('/auth/login', data);
+        queryClient.invalidateQueries();
         toast.success('Successfully logged in');
         return redirect('/dashboard')
     } catch (error) {

@@ -5,22 +5,34 @@ import { Form, redirect, useLoaderData, useNavigation } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { FormRow, FormRowSelect, SubmitButton } from '../components';
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
+import { useQuery } from '@tanstack/react-query';
 
-export const loader = async ({ params }) => {
+const singleJobQuery = (id) => {
+    return {
+        queryKey: ['job', id],
+        queryFn: async () => {
+            const { data } = await customFetch.get(`/jobs/${id}`);
+            return data;
+        }
+    }
+}
+export const loader = (queryClient) => async ({ params }) => {
+    const { id } = params;
     try {
-        const { data } = await customFetch.get(`/jobs/${params.id}`);
-        return data;
+        await queryClient.ensureQueryData(singleJobQuery(id));
+        return id;
     } catch (error) {
         toast.error(error?.response?.data?.msg);
         return redirect('../all-jobs')
     }
 }
 
-export const action = async ({ request, params }) => {
+export const action = (queryClient) => async ({ request, params }) => {
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
     try {
         await customFetch.patch(`/jobs/${params.id}`, data);
+        queryClient.invalidateQueries(['jobs'])
         toast.success('job updated successfully');
         return redirect('../all-jobs');
     } catch (error) {
@@ -29,9 +41,8 @@ export const action = async ({ request, params }) => {
     }
 }
 const EditJob = () => {
-    const { job } = useLoaderData();
-    const navigation = useNavigation();
-    const isSubmitting = navigation.state === 'submitting';
+    const id = useLoaderData()
+    const { job } = useQuery(singleJobQuery(id)).data;
     return (
         <Wrapper>
             <Form method='POST' className='form'>

@@ -8,13 +8,14 @@ import { toast } from 'react-toastify'
 import styled from 'styled-components'
 
 
-export const action = async ({ request }) => {
+export const action = (queryClient) => async ({ request }) => {
     const formData = await request.formData();
     const data = Object.fromEntries(formData);
 
     try {
         await customFetch.post('/jobs', data);
         toast.success('Job added successfully')
+        queryClient.invalidateQueries(['jobs'])
         return redirect('all-jobs');
     } catch (err) {
         toast.error(err?.response?.data?.msg);
